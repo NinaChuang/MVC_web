@@ -1,62 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Bootstrap Example</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
 
 	<form action="action_page.php">
 		<div align="center">
-			<font color="black" size="6" face="Arial Black"> Member Profile</font>
+			<font color="black" size="6" face="Arial Black"> Member
+				Profile</font>
 		</div>
-		<table style="border: 8px #ff9e8c groove;" cellpadding="10"
-			border='30' width='500' height='400' bgcolor="#fff2d9" align="center" valign="middle" >
-			
-			<tr>
-				<td align='center' valign="middle"><b>姓名:</td>
-				</b>
-				<td align='center' valign="middle"><input type="text" name=""value="">
-					</td>
-				<td align='center' valign="middle" rowspan='3' width='25%'>
-				<a href="連結前往的網址"><img src="圖片網址" width="150" height="100"></a></td>
+		<table style="border: 5px #ff7359 groove;" width='450' height='500'
+			align="center">
+
+
+			<td align='right'><b>姓名:　　</td>
+			</b>
+			<td align='center' valign="middle"><input type="text" name=""
+				value=""></td>
+			　　<td align='left' rowspan='3' width='30%'>　　<a
+					href="https://www.google.com.tw/search?q=%E9%A2%A8%E6%99%AF&espv=2&biw=1366&bih=613&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjwzu7OocDQAhWBHZQKHQQbA1MQ_AUIBigB#imgrc=tmb56jjUvMnKkM%3A">
+						<img src="C:\pic\view.jpg" width="200" height="240">
+				</a></td>
+			<td></td>
+
 			</tr>
 			<tr>
-				<td align='center' valign="middle"><b>年齡:</td>
+				<td align='right'><b>年齡:　　</td>
 				</b>
-				<td align='center' valign="middle"><input type="text" name=""value=""> 
-					</td>
+				<td align='center' valign="middle"><input type="text" name=""
+					value=""></td>
+				
+				<td></td>
 			</tr>
 			<tr>
-				<td align='center' valign="middle"="center"><b>性別:</td>
+				<td align='right'><b>性別:　　</td>
 				</b>
-				<td align='center' valign="middle">
-					<input type="radio" name="sex" value="boy">男　　　　
-					<input type="radio"name="sex" value="girl">女
-				</td>
+				<td align='center' valign="middle"><input type="radio"
+					name="sex" value="boy">男 　　　　<input type="radio" name="sex"
+					value="girl">女</td>
+				<td></td>
 			</tr>
 			<tr>
-				<td align='center' valign="middle"><b>地址:</td>
+				<td align='right'><b>地址:　　</td>
 				</b>
-				<td align='center' valign="middle"><select name="address"><option
-							value="city"></option></select></td>
-				<td align='center' valign="middle"><select name="address"><option
-							value="town"></option></select></td>
+				<td align='center' valign="middle"><select name="address">
+						<option value="city">台北市</option>
+						<option value="city">新北市</option>
+						<option value="city">台中市</option>
+				</select></b>　　　<select name="address">
+						<option value="town">大同區</option>
+						<option value="town">大安區</option>
+						<option value="town">信義區</option>
+				</select></td>
+				<td></td>
 			</tr>
 
 			<tr>
-				<td align='center' valign="middle"><b>E-MAIL:</td>
-				</b>
-				<td align='center' valign="middle"><input type="text"
-					name="lastname" value=""><br /> <font color="red" size="1">錯誤訊息顯示在這</font></td>
+				<td align='center'><b>E-MAIL:　　</td>
+<td align='center' valign="middle"><input type="text" name=""
+				value=""></td>
+				<td align="center"><div class="form-group">　　<input  type="file" class="form-control-file" id="exampleInputFile"
+						aria-describedby="fileHelp">　　<small id="fileHelp"
+						class="form-text text-muted">
+				</div></td>
+				<td></td>
+				<td></td>
 			</tr>
 			<tr>
-				<td align='center' valign="middle"><b>手機號碼:</td>
-				</b>
+				<td align='center'><b>手機號碼:　　</td>
+
 				<td align='center' valign="middle"><input type="text"
 					name="lastname" value=""><br /> <font color="red" size="1">錯誤訊息顯示在這</font></td>
-				<td align='center' valign="middle"><input type="button"
-					value="Submit" style="width: 120px; height: 40px; font-size: 15px; background-color:#ccc1ad; "></td>
+				<td align='center' valign="middle"><b>
+						<button type="button" class="btn btn-default">Submit</button></td>
+				<td></td>
 			</tr>
 
 		</table>
