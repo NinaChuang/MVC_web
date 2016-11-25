@@ -6,10 +6,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-	$(document).on("click", "#submit", function() { 
+	$(document).on("click", "#submit", function(event) {
+
 		var msg = $('#msg').val();
-		$.get("controllerServletImpl",{msg:msg}, function(responseText) { 
-			alert(responseText);
+		/* stop form from submitting normally */
+		event.preventDefault();
+		$.get("controllerServletImpl", {
+			msg : msg
+		}, function(responseText) {
+			console.log(responseText);
 			$("#testMsg").text(responseText);
 		});
 	});
@@ -18,12 +23,15 @@
 </head>
 <body>
 	<center>
-		<h2>歡迎進入Servlet範例<h2>
+		<h2>
+			歡迎進入Servlet範例
+			<h2>
 				<hr />
 				<br />
-				<form>輸入訊息<br /> <input type="text" id="msg" /> 
-					<input type="submit" id="submit" value="Send" />
-					
+				<form>
+					輸入訊息<br /> <input type="text" id="msg" />
+					<button id="submit">按鈕</button>
+
 				</form>
 				<div id="testMsg"></div>
 	</center>
