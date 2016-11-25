@@ -5,10 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import com.acer.mvc.model.IModel;
-import com.acer.mvc.model.Model;
 import com.acer.mvc.model.ModelFactory;
 import com.acer.mvc.vo.UserVo;
 
+/**
+ * 
+ * @author USER
+ *
+ */
 public class ControllerImpl implements IController {
 	private IModel model;
 
