@@ -3,29 +3,29 @@ $(document).ready(function() {
 	doOnchageCity();
 });
 
-//查詢下拉式選項
+// 查詢下拉式選項
 function setCityOption() {
 	var json = {
 		'getCity' : 'getCity'
 	};
 	$.ajax({
-		url : "controllerServletImpl",
-		type : "POST",
+		url : "controllerServletImpl", //to controller path
+		type : "POST",                 //doPost
 		cache : false,
-		data : JSON.stringify(json),
+		data : JSON.stringify(json),   //send data source
 		async : false,
-		// 			dataType : "'text json'",
-		contentType : "application/json; charset=utf-8",
+		// dataType : "'text json'",
+		contentType : "application/json; charset=utf-8", //data type
 		success : function(response) {
 			var json = JSON.parse(response);
-			doSetAttributeOption(json);
+			doSetAttributeOption(json);      //if method success, do this method.
 		},
 		error : function(xhr) {
 			alert(xhr.status);
 		},
 	});
 }
-//將資料塞進Attribute下拉式選項中
+// 將資料塞進下拉式選項中
 function doSetAttributeOption(json) {
 	var Attribute = document.getElementById("addressCity");
 	var AttributeCount = Attribute.length;
@@ -35,50 +35,47 @@ function doSetAttributeOption(json) {
 	}
 
 	for (var i = 0; i < json.length; i++) {
-		var option = document.createElement("option");
-		option.value = json[i]["provinceNo"] + ',' + json[i]["cityNo"];
-		option.text = json[i]["cityName"];
-
-		Attribute.add(option);
-	}
+		var option = document.createElement("option"); //建立option元素
+		option.value = json[i]["provinceNo"] + ',' + json[i]["cityNo"];  //建立option value
+		option.text = json[i]["cityName"];  //建立option name
+		Attribute.add(option); //塞入下拉選單
+	}  
 }
-function doOnchageCity(){
-	
- 	$("#addressCity").on("change", function(event) {
+function doOnchageCity() {
 
-	var msg = $('#addressCity').val();
-	var json = {
+	$("#addressCity").on("change", function(event) {
+
+		var msg = $('#addressCity').val();
+		var json = {
 			'getTown' : msg
 		};
-	/* stop form from submitting normally */
-	event.preventDefault();
-	$.ajax({
-		url : "controllerServletImpl",
-		type : "POST",
-		cache : false,
-		data : JSON.stringify(json),
-		async : false,
-		// 			dataType : "'text json'",
-		contentType : "application/json; charset=utf-8",
-		success : function(response) {
-			var json = JSON.parse(response);
-		},
-		error : function(xhr) {
-			alert(xhr.status);
-		},
-	});
-	
-});
-}
-// 	$(document).on("click", "#submit", function(event) {
+		$.ajax({
+			url : "controllerServletImpl",
+			type : "POST",
+			cache : false,
+			data : JSON.stringify(json),
+			async : false,
+			// dataType : "'text json'",
+			contentType : "application/json; charset=utf-8",
+			success : function(response) {
+				var json = JSON.parse(response);
+			},
+			error : function(xhr) {
+				alert(xhr.status);
+			},
+		});
 
-//		var msg = $('#msg').val();
-//		/* stop form from submitting normally */
-//		event.preventDefault();
-//		$.get("controllerServletImpl", {
-//			'getCity' : 'getCity'
-//		}, function(responseText) {
-//			var json = JSON.parse(responseText);
-//			doSetAttributeOption(json);
+	});
+}
+// $(document).on("click", "#submit", function(event) {
+
+// var msg = $('#msg').val();
+// /* stop form from submitting normally */
+// event.preventDefault();
+// $.get("controllerServletImpl", {
+// 'getCity' : 'getCity'
+// }, function(responseText) {
+// var json = JSON.parse(responseText);
+// doSetAttributeOption(json);
 //		});
 //	});
