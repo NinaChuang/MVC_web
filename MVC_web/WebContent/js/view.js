@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	upLoadFile();
 	setCityOption();
 	doOnchageCity();
 });
@@ -10,15 +11,15 @@ function setCityOption() {
 	};
 	$.ajax({
 		url : "controllerServletImpl", //to controller path
-		type : "POST",                 //doPost
+		type : "POST", //doPost
 		cache : false,
-		data : JSON.stringify(json),   //send data source
+		data : JSON.stringify(json), //send data source
 		async : false,
 		// dataType : "'text json'",
 		contentType : "application/json; charset=utf-8", //data type
 		success : function(response) {
 			var json = JSON.parse(response);
-			doSetAttributeOption(json);      //if method success, do this method.
+			doSetAttributeOption(json); //if method success, do this method.
 		},
 		error : function(xhr) {
 			alert(xhr.status);
@@ -50,8 +51,7 @@ function setTownOption(json) {
 	for (var i = 0; i < AttributeCount; i++) {
 		Attribute.remove(0);
 	}
-	 
-	
+
 	for (var i = 0; i < json.length; i++) {
 		var option = document.createElement("option");
 		option.value = json[i]["provinceNo"] + ',' + json[i]["cityNo"] + ','
@@ -92,7 +92,33 @@ function doOnchageCity() {
 
 	});
 }
+function upLoadFile() {
+	$('#submitBtn').on('click', function() {
+//		$.getScript("js/ajaxfileupload.js", function() {
 
+			$.ajaxFileUpload({
+				url : 'contorllerFielUpload',
+				secureuri : false,
+				fileElementId : 'exampleInputFile',
+				dataType : 'json',
+				success : function(data, status) {
+					if (typeof (data.error) != 'undefined') {
+						if (data.error != '') {
+							alert(data.error);
+						} else {
+							alert(data.msg);
+						}
+					}
+				},
+				error : function(data, status, e) {
+					alert(e);
+				}
+			})
+
+//		});
+
+	});
+}
 // $(document).on("click", "#submit", function(event) {
 
 // var msg = $('#msg').val();

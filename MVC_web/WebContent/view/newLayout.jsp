@@ -20,9 +20,11 @@
 <base
 	href="${fn:substring(url, 0, fn:length(url) - fn:length(uri))}${req.contextPath}/" />
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="js/ajaxfileupload.js"></script>
 <script src="js/view.js"></script>
 </head>
 <body>
+<form>
 	<div class="container" 　align="left" style="width: 550px;">
 		<h1 align='center'>Member Profile</h1>
 		<table class="table table-striped">
@@ -76,11 +78,13 @@
 				<tr>
 					<td></td>
 					<td></td>
-					<td><button type="button" class="btn btn-default">Submit</button></td>
+					<td><button type="button" class="btn btn-default" id="submitBtn">Submit</button></td>
+					
+					
 				</tr>
 			</tbody>
 		</table>
 	</div>
-
+</form>
 </body>
 </html>
