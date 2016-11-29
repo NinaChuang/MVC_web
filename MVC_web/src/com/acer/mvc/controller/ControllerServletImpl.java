@@ -21,6 +21,10 @@ import com.google.gson.JsonObject;
 @WebServlet("/controllerServletImpl/")
 public class ControllerServletImpl extends HttpServlet implements IController {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private IModel model;
 	private Gson gson;
 
@@ -50,7 +54,7 @@ public class ControllerServletImpl extends HttpServlet implements IController {
 	throws ServletException, IOException {
        
 		gson = new Gson();
-		JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
+		JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class); 
 		String getCity = null;
 		String getTown = null;
 		if(data.get("getCity")!=null){
