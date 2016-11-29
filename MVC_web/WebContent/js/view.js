@@ -25,7 +25,7 @@ function setCityOption() {
 		},
 	});
 }
-// 將資料塞進下拉式選項中
+// 將資料塞進Attribute下拉式選項中
 function doSetAttributeOption(json) {
 	var Attribute = document.getElementById("addressCity");
 	var AttributeCount = Attribute.length;
@@ -35,11 +35,30 @@ function doSetAttributeOption(json) {
 	}
 
 	for (var i = 0; i < json.length; i++) {
-		var option = document.createElement("option"); //建立option元素
-		option.value = json[i]["provinceNo"] + ',' + json[i]["cityNo"];  //建立option value
-		option.text = json[i]["cityName"];  //建立option name
-		Attribute.add(option); //塞入下拉選單
-	}  
+		var option = document.createElement("option");
+		option.value = json[i]["provinceNo"] + ',' + json[i]["cityNo"];
+		option.text = json[i]["cityName"];
+
+		Attribute.add(option);
+	}
+
+}
+function setTownOption(json) {
+	var Attribute = document.getElementById("addressTown");
+	var AttributeCount = Attribute.length;
+
+//	for (var i = 1; i < AttributeCount; i++) {
+//		Attribute.remove(1);
+//	}
+
+	for (var i = 0; i < json.length; i++) {
+		var option = document.createElement("option");
+		option.value = json[i]["provinceNo"] + ',' + json[i]["cityNo"] + ','
+				+ json[i]["areaNo"];
+		option.text = json[i]["areaName"];
+
+		Attribute.add(option);
+	}
 }
 function doOnchageCity() {
 
@@ -49,6 +68,8 @@ function doOnchageCity() {
 		var json = {
 			'getTown' : msg
 		};
+
+		alert(msg);
 		$.ajax({
 			url : "controllerServletImpl",
 			type : "POST",
@@ -59,14 +80,18 @@ function doOnchageCity() {
 			contentType : "application/json; charset=utf-8",
 			success : function(response) {
 				var json = JSON.parse(response);
+				setTownOption(json);
 			},
 			error : function(xhr) {
 				alert(xhr.status);
+
 			},
+
 		});
 
 	});
 }
+
 // $(document).on("click", "#submit", function(event) {
 
 // var msg = $('#msg').val();
