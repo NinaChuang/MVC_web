@@ -1,6 +1,8 @@
 package com.acer.mvc.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +28,7 @@ public class ControllerServletImpl extends HttpServlet implements IController {
 	public List<Map<String, String>> getFilterTowns(String provinceNo,
 			String cityNo) {
 
-		return null;
+		return getModel().getListMapTown(provinceNo, cityNo);
 	}
 
 	@Override
@@ -56,13 +58,29 @@ public class ControllerServletImpl extends HttpServlet implements IController {
 		}else if(data.get("getTown")!=null){
 			getTown = data.get("getTown").getAsString();
 		}
+		
 		if (getCity != null) {
 			String gsonCity = gson.toJson(getListMapCity());
-			response.setContentType("text/plain");
+			response.setContentType("text/plain"); //回傳一個字串,格式為UTF-8
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(gsonCity);
 		}else if(getTown != null){
-			System.out.println("getTown."+getTown);
+			System.out.println("getTown="+getTown);
+			String[] a=getTown.split(",");
+			String provinceNo ="";
+			String cityNo="";
+			provinceNo=a[0] ;
+			cityNo    =a[1] ;
+			
+			List<Map<String, String>> listMap=getFilterTowns(provinceNo,
+						cityNo);
+			
+			System.out.println("="+listMap.get(0).entrySet());
+			
+			String gsonTown = gson.toJson(listMap);
+			response.setContentType("text/plain"); //回傳一個字串,格式為UTF-8
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(gsonTown);
 		}
 
 	}
@@ -71,5 +89,14 @@ public class ControllerServletImpl extends HttpServlet implements IController {
 		ModelFactory modelFactory = ModelFactory.getInstance();
 		model = modelFactory.getModel();
 		return model;
+	}
+	
+	public static void main(String[] args) {
+		Gson gson = new Gson();
+		List<Map<String, String>> arrayList = new ArrayList<Map<String, String>>();
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("00", "001");
+		arrayList.add(map);
+		System.out.println(gson.toJson(arrayList));
 	}
 }

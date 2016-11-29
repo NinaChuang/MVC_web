@@ -3,7 +3,7 @@ $(document).ready(function() {
 	doOnchageCity();
 });
 
-//查詢下拉式選項
+// 查詢下拉式選項
 function setCityOption() {
 	var json = {
 		'getCity' : 'getCity'
@@ -14,7 +14,7 @@ function setCityOption() {
 		cache : false,
 		data : JSON.stringify(json),
 		async : false,
-		// 			dataType : "'text json'",
+		// dataType : "'text json'",
 		contentType : "application/json; charset=utf-8",
 		success : function(response) {
 			var json = JSON.parse(response);
@@ -25,7 +25,7 @@ function setCityOption() {
 		},
 	});
 }
-//將資料塞進Attribute下拉式選項中
+// 將資料塞進Attribute下拉式選項中
 function doSetAttributeOption(json) {
 	var Attribute = document.getElementById("addressCity");
 	var AttributeCount = Attribute.length;
@@ -41,44 +41,69 @@ function doSetAttributeOption(json) {
 
 		Attribute.add(option);
 	}
-}
-function doOnchageCity(){
-	
- 	$("#addressCity").on("change", function(event) {
 
-	var msg = $('#addressCity').val();
-	var json = {
+}
+function setTownOption(json) {
+	var Attribute = document.getElementById("addressTown");
+	var AttributeCount = Attribute.length;
+
+//	console.log(Attribute);
+//	alert(Attribute);
+	for (var i = 1; i < AttributeCount; i++) {
+		Attribute.remove(1);
+	}
+
+	for (var i = 0; i < json.length; i++) {
+		var option = document.createElement("option");
+		option.value = json[i]["provinceNo"] + ',' + json[i]["cityNo"] + ','
+				+ json[i]["areaNo"];
+		option.text = json[i]["areaName"];
+
+		Attribute.add(option);
+	}
+}
+
+function doOnchageCity() {
+
+	$("#addressCity").on("change", function(event) {
+
+		var msg = $('#addressCity').val();
+		var json = {
 			'getTown' : msg
 		};
-	/* stop form from submitting normally */
-	event.preventDefault();
-	$.ajax({
-		url : "controllerServletImpl",
-		type : "POST",
-		cache : false,
-		data : JSON.stringify(json),
-		async : false,
-		// 			dataType : "'text json'",
-		contentType : "application/json; charset=utf-8",
-		success : function(response) {
-			var json = JSON.parse(response);
-		},
-		error : function(xhr) {
-			alert(xhr.status);
-		},
-	});
-	
-});
-}
-// 	$(document).on("click", "#submit", function(event) {
 
-//		var msg = $('#msg').val();
-//		/* stop form from submitting normally */
-//		event.preventDefault();
-//		$.get("controllerServletImpl", {
-//			'getCity' : 'getCity'
-//		}, function(responseText) {
-//			var json = JSON.parse(responseText);
-//			doSetAttributeOption(json);
-//		});
-//	});
+		alert(msg);
+		$.ajax({
+			url : "controllerServletImpl",
+			type : "POST",
+			cache : false,
+			data : JSON.stringify(json),
+			async : false,
+			// dataType : "'text json'",
+			contentType : "application/json; charset=utf-8",
+			success : function(response) {
+				var json = JSON.parse(response);
+				setTownOption(json);
+			},
+			error : function(xhr) {
+				alert(xhr.status);
+
+			},
+
+		});
+
+	});
+}
+
+// $(document).on("click", "#submit", function(event) {
+
+// var msg = $('#msg').val();
+// /* stop form from submitting normally */
+// event.preventDefault();
+// $.get("controllerServletImpl", {
+// 'getCity' : 'getCity'
+// }, function(responseText) {
+// var json = JSON.parse(responseText);
+// doSetAttributeOption(json);
+// });
+// });
