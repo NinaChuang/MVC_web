@@ -47,10 +47,11 @@ function setTownOption(json) {
 	var Attribute = document.getElementById("addressTown");
 	var AttributeCount = Attribute.length;
 
-//	for (var i = 1; i < AttributeCount; i++) {
-//		Attribute.remove(1);
-//	}
-
+	for (var i = 0; i < AttributeCount; i++) {
+		Attribute.remove(0);
+	}
+	 
+	
 	for (var i = 0; i < json.length; i++) {
 		var option = document.createElement("option");
 		option.value = json[i]["provinceNo"] + ',' + json[i]["cityNo"] + ','
