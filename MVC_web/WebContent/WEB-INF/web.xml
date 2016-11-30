@@ -9,10 +9,20 @@
       <servlet-name>controllerServletImpl</servlet-name>
       <servlet-class>com.acer.mvc.controller.ControllerServletImpl</servlet-class>
     </servlet>
+    
+    <servlet>
+      <servlet-name>contorllerFielUpload</servlet-name>
+      <servlet-class>com.acer.mvc.controller.ContorllerFielUpload</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>controllerServletImpl</servlet-name>
         <url-pattern>/controllerServletImpl/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>contorllerFielUpload</servlet-name>
+        <url-pattern>/contorllerFielUpload/*</url-pattern>
     </servlet-mapping>
 
 </web-app>
