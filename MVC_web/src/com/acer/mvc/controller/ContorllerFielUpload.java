@@ -15,6 +15,9 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
+
+import com.google.gson.Gson;
 
 @WebServlet("/contorllerFielUpload/")
 @MultipartConfig
@@ -23,7 +26,7 @@ public class ContorllerFielUpload extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+    private Gson gson;
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void doPost(HttpServletRequest request,
@@ -43,18 +46,26 @@ public class ContorllerFielUpload extends HttpServlet {
 			try {
 				// Parse the request
 				List<FileItem> multiparts = upload.parseRequest(request);
-				System.out.println("multiparts/"+multiparts.size());
 				for (FileItem item : multiparts) {
-					 System.out.println("item.isFormField()."+item.isFormField());
 					if (!item.isFormField()) {
+						String path = this.getServletContext().getRealPath("/pics"); 
+						File directory = new File(path);  
+			            if (!directory.exists()) {  
+			                FileUtils.forceMkdir(directory);  
+			            }  
 						String name = new File(item.getName()).getName();
-						System.out.println("name=" + name);
-						// item.write(new File("" + File.separator + name));
+					    item.write(new File(path + File.separator + name));
 					}
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}else{
+			gson = new Gson();
+			String msg = "{'error':'data not found.'}";
+			response.setContentType("text/plain");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(gson.toJson(msg));
 		}
 	}
 
