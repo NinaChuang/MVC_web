@@ -30,7 +30,7 @@
 		<table class="table table-striped">
 			<tbody>
 				<tr>
-					<td align='right'><img src="C:\pic\view.jpg" width="200"
+					<td align='right'><img src="/MVC_web/img/view.jpg" width="200"
 						height="240"></td>
 					<td align="button"><div class="form-group">
 
@@ -52,7 +52,7 @@
 				</tr>
 				<tr>
 					<td align='center'>性別:</td>
-					<td><input type="radio" name="sex" value="boy">男 <input
+					<td>　　<input type="radio" name="sex" value="boy">男　　　<input
 						type="radio" name="sex" value="girl">女</td>
 					<td></td>
 				</tr>
@@ -60,25 +60,25 @@
 					<td align='center'>地址:</td>
 					<td><select name="address" id="addressCity">
 
-					</select></b> <select name="address" id="addressTown">
+					</select></b>　　　<select name="address" id="addressTown">
 
 					</select></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td align='center'>E-MAIL:</td>
-					<td><input type="text" name="" value=""></td>
+					<td><input type="text" name="" value=""　id="email"></td>
 					<td><font color="red" size="1" 　align='left'>錯誤訊息</font></td>
 				</tr>
 				<tr>
 					<td align='center'>手機號碼:</td>
-					<td><input type="text" name="" value=""></td>
+					<td><input type="text" name="" value="" id="phone"></td>
 					<td><font color="red" size="1">錯誤訊息</font></td>
 				</tr>
 				<tr>
 					<td></td>
 					<td></td>
-					<td><button type="button" class="btn btn-default" id="submitBtn">Submit</button></td>
+					<td><button type="button" class="btn btn-default" id="submitbtn">Submit</button></td>
 					
 					
 				</tr>
