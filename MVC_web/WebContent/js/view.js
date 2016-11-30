@@ -1,12 +1,8 @@
 $(document).ready(function() {
-	upLoadFile();
+//	upLoadFile();
 	setCityOption();
 	doOnchageCity();
-});
-
-$(document).ready(function() {
-	setSubmitOption();
-	doOnclickCity();
+	doSubmitOption();
 });
 
 // 查詢下拉式選項
@@ -30,14 +26,28 @@ function setCityOption() {
 			alert(xhr.status);
 		},
 	});
+}
 
-	function setSubmitOption() {
-        var email = $("#email").val();
-        var phone = $("#phone").val();
+function doSubmitOption() {
+	
+	$('#submitBtn').on('click', function() {
+		alert($("#exampleInputFile").val());
+//		alert("setSubmitOption coming")
+		var name = $("#name").val();
+		var age = $("#age").val();
+		var addressCity = $("#addressCity").val();
+		var addressTown = $("#addressTown").val();
+		var email = $("#email").val();
+		alert(email);
+		var phone = $("#phone").val();
 		var json = {
-            'submit' : 'submit',
-			'email' : email ,
-			'phone' : phone
+				'submit' : 'submit',
+				'name' : name,
+				'age' : age,
+				'addressCity' : addressCity,
+				'addressTown' : addressTown,
+				'email' : email,
+				'phone' : phone
 		};
 		$.ajax({
 			url : "controllerServletImpl", //to controller path
@@ -49,15 +59,36 @@ function setCityOption() {
 			contentType : "application/json; charset=utf-8", //data type
 			success : function(response) {
 				var json = JSON.parse(response);
-				doSetAttributeOption(json); //if method success, do this method.
+				handleSubmit(json); //if method success, do this method.
 			},
 			error : function(xhr) {
 				alert(xhr.status);
 			},
 		});
-	}
-
+	});
 }
+
+function handleSubmit(json) {
+	
+	//顯示驗證錯誤訊息
+	var errmail = $("#errorEmail");
+	var errphone = $("#errorPhone");
+	errmail.html(json['email']);
+	errphone.html(json['phone']);
+	
+	//顯示使用者已存在
+	if(json['userExist'] != undefined) {
+		alert(json['userExist']);
+	}
+	else if(json['saveSuccess'] != undefined) {
+		alert(json['saveSuccess']);
+	}
+	else {
+		alert("server error")
+	}
+}
+
+
 // 將資料塞進Attribute下拉式選項中
 function doSetAttributeOption(json) {
 	var Attribute = document.getElementById("addressCity");
@@ -66,7 +97,12 @@ function doSetAttributeOption(json) {
 	for (var i = 1; i < AttributeCount; i++) {
 		Attribute.remove(1);
 	}
-
+	
+	var option = document.createElement("option");
+	option.value = "請選擇";
+	option.text = "請選擇";
+	Attribute.add(option);
+	
 	for (var i = 0; i < json.length; i++) {
 		var option = document.createElement("option");
 		option.value = json[i]["provinceNo"] + ',' + json[i]["cityNo"];
@@ -79,11 +115,28 @@ function doSetAttributeOption(json) {
 function setTownOption(json) {
 	var Attribute = document.getElementById("addressTown");
 	var AttributeCount = Attribute.length;
+	
+//	if(AttributeCount > 0) {
+//		$('#addressTown option').remove();
+//	}
+
+//	for (var i = 1; i < AttributeCount; i++) {
+//		Attribute.remove(0);
+//	}
+	
+//	for (var i = AttributeCount -1 ; i >= 0 ; i--) {
+//		Attribute.remove(1);
+//	}
 
 	for (var i = 0; i < AttributeCount; i++) {
 		Attribute.remove(0);
 	}
 
+//	var option = document.createElement("option");
+//	option.value = "請選擇";
+//	option.text = "請選擇";
+//	Attribute.add(option);
+	
 	for (var i = 0; i < json.length; i++) {
 		var option = document.createElement("option");
 		option.value = json[i]["provinceNo"] + ',' + json[i]["cityNo"] + ','
@@ -102,7 +155,7 @@ function doOnchageCity() {
 			'getTown' : msg
 		};
 
-		alert(msg);
+//		alert(msg);
 		$.ajax({
 			url : "controllerServletImpl",
 			type : "POST",
@@ -125,29 +178,26 @@ function doOnchageCity() {
 }
 function upLoadFile() {
 	$('#submitBtn').on('click', function() {
-//		$.getScript("js/ajaxfileupload.js", function() {
-
-			$.ajaxFileUpload({
-				url : 'contorllerFielUpload',
-				secureuri : false,
-				fileElementId : 'exampleInputFile',
-				dataType : 'json',
-				success : function(data, status) {
-					if (typeof (data.error) != 'undefined') {
-						if (data.error != '') {
-							alert(data.error);
-						} else {
-							alert(data.msg);
-						}
+		//		$.getScript("js/ajaxfileupload.js", function() {
+		alert('upLoadFile coming');
+		$.ajaxFileUpload({
+			url : 'contorllerFielUpload',
+			secureuri : false,
+			fileElementId : 'exampleInputFile',
+			dataType : 'json',
+			success : function(data, status) {
+				if (typeof (data.error) != 'undefined') {
+					if (data.error != '') {
+						alert(data.error);
+					} else {
+						alert(data.msg);
 					}
-				},
-				error : function(data, status, e) {
-					alert(e);
 				}
-			})
-
-//		});
-
+			},
+			error : function(data, status, e) {
+				alert(e);
+			}
+		})
 	});
 }
 // $(document).on("click", "#submit", function(event) {
