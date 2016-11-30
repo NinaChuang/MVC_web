@@ -16,6 +16,7 @@ import com.acer.mvc.model.IModel;
 import com.acer.mvc.model.ModelFactory;
 import com.acer.mvc.vo.UserVo;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 @WebServlet("/controllerServletImpl/")
@@ -58,40 +59,13 @@ public class ControllerServletImpl extends HttpServlet implements IController {
 				JsonObject.class);
 		String getCity = null;
 		String getTown = null;
-		String validate = null;
+		String submit = null;
 		if (data.get("getCity") != null) {
 			getCity = data.get("getCity").getAsString();
 		} else if (data.get("getTown") != null) {
 			getTown = data.get("getTown").getAsString();
-		} else if(data.get("submit") != null){
-			
-			//取得表單的資料
-			data.get("email");
-			
-			
-			
-			
-			//驗證email, phone
-			//有錯誤的話就 return
-			
-//			String gsonTown = gson.toJson(listMap);
-//			response.setContentType("text/plain"); // 回傳一個字串,格式為UTF-8
-//			response.setCharacterEncoding("UTF-8");
-//			response.getWriter().write(gsonTown);
-			
-			
-			
-			//驗證通過存到資料庫
-			
-			
-			
-			
-			
-			
-			
-			
-			
-//			this.validate(email, phone);
+		} else if (data.get("submit") != null) {
+			submit = data.get("submit").getAsString();
 		}
 
 		if (getCity != null) {
@@ -116,6 +90,75 @@ public class ControllerServletImpl extends HttpServlet implements IController {
 			response.setContentType("text/plain"); // 回傳一個字串,格式為UTF-8
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(gsonTown);
+		} else if (submit != null) {
+
+			// 取得表單的資料
+			String name = data.get("name").getAsString();
+			String age = data.get("age").getAsString();
+//			String addressCity = data.get("addressCity").getAsString();
+//			String addressTown = data.get("addressTown").getAsString();
+			String email = data.get("email").getAsString();
+			String phone = data.get("phone").getAsString();
+
+			// 驗證email, phone
+			// 有錯誤的話就 return
+			Map<String, String> errorMap = validate(email, phone);
+
+			if (errorMap != null && errorMap.size() > 0) {
+				String gsonTown = gson.toJson(errorMap);
+				response.setContentType("text/plain"); // 回傳一個字串,格式為UTF-8
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write(gsonTown);
+				return;
+			}
+			Map<String, String> validateMap = new HashMap<String, String>();
+
+			// 使用者已存在 return
+			List<Map<String, String>> userMapList = getModel().findUser(name,
+					email);
+			if (userMapList != null && userMapList.size() > 0) {
+				System.out.println("userMapList != null");
+				// new Map
+				// 塞錯誤訊息
+				validateMap.put("userExist", "使用者已存在");
+
+				String gsonTown = gson.toJson(validateMap);
+				response.setContentType("text/plain"); // 回傳一個字串,格式為UTF-8
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write(gsonTown);
+				return;
+			}
+
+			// 驗證通過存到資料庫
+			
+			UserVo userVo = new UserVo();
+			userVo.setName(name);
+			userVo.setAge(age);
+	//			userVo.setCity(addressCity);
+	//			userVo.setTown(addressTown);
+			userVo.setEmail(email);
+			userVo.setPhone(phone);
+			
+			boolean isSave = getModel().saveUser(userVo);
+			if (!isSave) {
+				System.out.println("I'm sentinel");
+				validateMap.put("userSaveErr", "存檔失敗");
+
+				String gsonTown = gson.toJson(errorMap);
+				response.setContentType("text/plain"); // 回傳一個字串,格式為UTF-8
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write(gsonTown);
+				return;
+			}
+			else {
+				errorMap.put("saveSuccess", "存檔成功");
+				String gsonTown = gson.toJson(errorMap);
+				response.setContentType("text/plain"); // 回傳一個字串,格式為UTF-8
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write(gsonTown);
+				return;
+			}
+
 		}
 
 	}
@@ -145,6 +188,7 @@ public class ControllerServletImpl extends HttpServlet implements IController {
 
 		if (!PhoneNumberValid.isPhoneNumberValid(vo.getPhone())) {
 			map.put("phone", "手機號碼輸入格式錯誤");
+			System.out.println(">> vo.getPhone() = " + vo.getPhone());
 		}
 		return map;
 	}

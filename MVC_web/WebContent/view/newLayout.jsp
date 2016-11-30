@@ -42,12 +42,12 @@
 				</tr>
 				<tr>
 					<td align='center'>姓名:</td>
-					<td><input type="text" name="" value=""></td>
+					<td><input type="text" name="" value="" id="name"></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td align='center'>年齡:</td>
-					<td><input type="text" name="" value=""></td>
+					<td><input type="text" name="" value="" id="age"></td>
 					<td></td>
 				</tr>
 				<tr>
@@ -67,18 +67,18 @@
 				</tr>
 				<tr>
 					<td align='center'>E-MAIL:</td>
-					<td><input type="text" name="" value=""　id="email"></td>
-					<td><font color="red" size="1" 　align='left'>錯誤訊息</font></td>
+					<td><input type="text" name="" id="email"/></td>
+					<td><font color="red" size="1" 　align='left' id="errorEmail"></font></td>
 				</tr>
 				<tr>
 					<td align='center'>手機號碼:</td>
 					<td><input type="text" name="" value="" id="phone"></td>
-					<td><font color="red" size="1">錯誤訊息</font></td>
+					<td><font color="red" size="1" id="errorPhone"></font></td>
 				</tr>
 				<tr>
 					<td></td>
 					<td></td>
-					<td><button type="button" class="btn btn-default" id="submitbtn">Submit</button></td>
+					<td><button type="button" class="btn btn-default" id="submitBtn">Submit</button></td>
 					
 					
 				</tr>
