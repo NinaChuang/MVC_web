@@ -85,12 +85,12 @@ public class Controller {
 		Map<String, String> map = new HashMap<String, String>();
 
 		if (!EmailValidator.validate(vo.getEmail())) {
-			map.put("email", "email輸入格式錯誤");
+			map.put("email", "格式錯誤");
 			System.out.println(">> vo.getEmail() = " + vo.getEmail());
 		}
 
 		if (!PhoneNumberValid.isPhoneNumberValid(vo.getPhone())) {
-			map.put("phone", "手機號碼輸入格式錯誤");
+			map.put("phone", "格式錯誤");
 		}
 		return map;
 	}

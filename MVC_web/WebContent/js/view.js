@@ -3,6 +3,7 @@ $(document).ready(function() {
 	setCityOption();
 	doOnchageCity();
 	doSubmitOption();
+	previewImg();
 });
 
 // 查詢下拉式選項
@@ -31,7 +32,7 @@ function setCityOption() {
 function doSubmitOption() {
 	
 	$('#submitBtn').on('click', function() {
-		alert($("#exampleInputFile").val());
+//		alert($("#exampleInputFile").val().split('\\').pop());
 //		alert("setSubmitOption coming")
 		var name = $("#name").val();
 		var age = $("#age").val();
@@ -40,6 +41,7 @@ function doSubmitOption() {
 		var email = $("#email").val();
 		alert(email);
 		var phone = $("#phone").val();
+		var imgName = $("#exampleInputFile").val().split('\\').pop()
 		var json = {
 				'submit' : 'submit',
 				'name' : name,
@@ -47,7 +49,8 @@ function doSubmitOption() {
 				'addressCity' : addressCity,
 				'addressTown' : addressTown,
 				'email' : email,
-				'phone' : phone
+				'phone' : phone,
+				'imgName' : imgName
 		};
 		$.ajax({
 			url : "controllerServletImpl", //to controller path
@@ -80,11 +83,8 @@ function handleSubmit(json) {
 	if(json['userExist'] != undefined) {
 		alert(json['userExist']);
 	}
-	else if(json['saveSuccess'] != undefined) {
+	if(json['saveSuccess'] != undefined) {
 		alert(json['saveSuccess']);
-	}
-	else {
-		alert("server error")
 	}
 }
 
@@ -200,6 +200,40 @@ function upLoadFile() {
 		})
 	});
 }
+
+function previewImg() {
+	$("#exampleInputFile").on('change', function() {
+		  //Hide default preview
+		  $("#defaultImg").hide();
+	      //Get count of selected files
+	      var countFiles = $(this)[0].files.length;
+	      var imgPath = $(this)[0].value;
+	      var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+	      var image_holder = $("#image-holder");
+	      image_holder.empty();
+	      if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+	        if (typeof(FileReader) != "undefined") {
+	          //loop for each file selected for uploaded.
+	          for (var i = 0; i < countFiles; i++) 
+	          {
+	            var reader = new FileReader();
+	            reader.onload = function(e) {
+	              $("<img />", {
+	                "src": e.target.result,
+	                "class": "thumb-image"
+	              }).appendTo(image_holder);
+	            }
+	            image_holder.show();
+	            reader.readAsDataURL($(this)[0].files[i]);
+	          }
+	        } else {
+	          alert("This browser does not support FileReader.");
+	        }
+	      } else {
+	        alert("Pls select only images");
+	      }
+	    });
+}
 // $(document).on("click", "#submit", function(event) {
 
 // var msg = $('#msg').val();
@@ -212,3 +246,4 @@ function upLoadFile() {
 // doSetAttributeOption(json);
 //		});
 //	});
+

@@ -22,6 +22,7 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="js/ajaxfileupload.js"></script>
 <script src="js/view.js"></script>
+<style type="text/css">.thumb-image{width:200px;padding:5px;}</style>
 </head>
 <body>
 <form>
@@ -30,8 +31,10 @@
 		<table class="table table-striped">
 			<tbody>
 				<tr>
-					<td align='right'><img src="/MVC_web/img/view.jpg" width="200"
-						height="240"></td>
+					<td align='right'>
+						<img src="/MVC_web/img/view.jpg" width="200" height="240" id="defaultImg">
+						<div id="image-holder"></div>
+					</td>
 					<td align="button"><div class="form-group">
 
 							<input type="file" class="form-control-file"

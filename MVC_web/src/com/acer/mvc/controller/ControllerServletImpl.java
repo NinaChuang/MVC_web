@@ -16,7 +16,6 @@ import com.acer.mvc.model.IModel;
 import com.acer.mvc.model.ModelFactory;
 import com.acer.mvc.vo.UserVo;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 @WebServlet("/controllerServletImpl/")
@@ -53,7 +52,8 @@ public class ControllerServletImpl extends HttpServlet implements IController {
 			HttpServletResponse response)
 
 	throws ServletException, IOException {
-
+		
+		//讀取request的東西，拆成String(data)
 		gson = new Gson();
 		JsonObject data = new Gson().fromJson(request.getReader(),
 				JsonObject.class);
@@ -95,8 +95,9 @@ public class ControllerServletImpl extends HttpServlet implements IController {
 			// 取得表單的資料
 			String name = data.get("name").getAsString();
 			String age = data.get("age").getAsString();
-//			String addressCity = data.get("addressCity").getAsString();
-//			String addressTown = data.get("addressTown").getAsString();
+			String sex = data.get("sex").getAsString();
+			String addressCity = data.get("addressCity").getAsString();
+			String addressTown = data.get("addressTown").getAsString();
 			String email = data.get("email").getAsString();
 			String phone = data.get("phone").getAsString();
 
@@ -130,15 +131,17 @@ public class ControllerServletImpl extends HttpServlet implements IController {
 			}
 
 			// 驗證通過存到資料庫
-			
+
 			UserVo userVo = new UserVo();
 			userVo.setName(name);
 			userVo.setAge(age);
-	//			userVo.setCity(addressCity);
-	//			userVo.setTown(addressTown);
+			userVo.setSex(sex);
+			userVo.setCity(addressCity);
+			userVo.setTown(addressTown);
 			userVo.setEmail(email);
 			userVo.setPhone(phone);
-			
+
+			//是否資料儲存成功
 			boolean isSave = getModel().saveUser(userVo);
 			if (!isSave) {
 				System.out.println("I'm sentinel");
@@ -149,8 +152,7 @@ public class ControllerServletImpl extends HttpServlet implements IController {
 				response.setCharacterEncoding("UTF-8");
 				response.getWriter().write(gsonTown);
 				return;
-			}
-			else {
+			} else {
 				errorMap.put("saveSuccess", "存檔成功");
 				String gsonTown = gson.toJson(errorMap);
 				response.setContentType("text/plain"); // 回傳一個字串,格式為UTF-8
@@ -178,21 +180,23 @@ public class ControllerServletImpl extends HttpServlet implements IController {
 		System.out.println(gson.toJson(arrayList));
 	}
 
+	// doValidate Email,Phone驗證
 	private Map<String, String> doValidate(UserVo vo) {
 		Map<String, String> map = new HashMap<String, String>();
 
 		if (!EmailValidator.validate(vo.getEmail())) {
-			map.put("email", "email輸入格式錯誤");
+			map.put("email", "格式錯誤");
 			System.out.println(">> vo.getEmail() = " + vo.getEmail());
 		}
 
 		if (!PhoneNumberValid.isPhoneNumberValid(vo.getPhone())) {
-			map.put("phone", "手機號碼輸入格式錯誤");
+			map.put("phone", "格式錯誤");
 			System.out.println(">> vo.getPhone() = " + vo.getPhone());
 		}
 		return map;
 	}
 
+	// 驗證完的資料傳到Map<String, String>,再裝到UserVo
 	public Map<String, String> validate(String email, String phone) {
 		UserVo uservo = new UserVo();
 		uservo.setEmail(email);
