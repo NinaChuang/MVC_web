@@ -7,6 +7,10 @@ $(document).ready(function() {
 });
 
 // 查詢下拉式選項
+/* call controller用的javascript，在setCityOption這個方法主要用來查詢下拉式選項，
+ 	剛開始先宣告一個Json型態，call setCityOption時，	會把資料傳到controllerServletImpl做do Post，
+	資料型態是Json，controllerServletImpl會回傳一個response回來，	若成功的話會去call doSetAttributeOption 這個方法，
+	若有錯誤，會有alert。*/
 function setCityOption() {
 	var json = {
 		'getCity' : 'getCity'
